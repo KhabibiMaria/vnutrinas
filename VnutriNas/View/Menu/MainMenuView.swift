@@ -44,11 +44,18 @@ struct MainMenuView: View {
                             .font(.custom(customFont, size: 17).weight(.semibold))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 30)
-                        ScrollView(.horizontal, showsIndicators: false){
+                        
                             HStack(spacing: 20){
-                                
+                                ForEach(itemsMOCK.shuffled().prefix(2), id: \.id){item in
+                                    NavigationLink {
+                                        DetailItemView(model: item)
+                                    } label: {
+                                        ItemCardView(model: item)
+                                    }
+                                }
                             }
-                        }
+                            .padding(.horizontal, 30)
+                        
                         
                     }
                     .padding(.bottom, 22)
@@ -59,8 +66,21 @@ struct MainMenuView: View {
                             .padding(.leading, 30)
                        
                         
+                            
+                            LazyVGrid(columns: [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)], spacing: 20) {
+                                ForEach(itemsMOCK, id: \.id){item in
+                                    NavigationLink {
+                                        DetailItemView(model: item)
+                                    } label: {
+                                        ItemCardView(model: item)
+                                    }
+
+                                }
+                            }
+                            .padding(.horizontal, 30)
+                        
                     }
-                    .padding(.bottom)
+                    .padding(.bottom, 30)
                 }
             
             }
@@ -83,6 +103,31 @@ struct MainMenuView: View {
             )
         }
        
+    }
+}
+
+struct ItemCardView: View{
+    var model: ItemModel
+    var body: some View{
+        VStack(spacing: 0){
+            Image(model.image)
+                .resizable()
+                .frame(width: 110, height: 110)
+                .cornerRadius(20)
+                .padding(.top, 8)
+            Text(model.name)
+                .font(.custom(customFont, size: 14).weight(.semibold))
+                .padding(.top, 7)
+            Text("\(model.price) руб.")
+                .font(.custom(customFont, size: 12).weight(.light))
+                .padding(.bottom, 8)
+        }
+        .foregroundColor(Color.black)
+        .frame(width: 167)
+        .background(Color.white)
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(lineWidth: 0.5).foregroundColor(Color.black.opacity(0.3)))
+        .shadow(color: Color.black.opacity(0.2), radius: 14, x: 0, y: 5)
     }
 }
 
