@@ -9,9 +9,8 @@ import SwiftUI
 
 struct SignUpView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var rePassword: String = ""
+    @EnvironmentObject var loginVM: LoginViewModel
+
     var body: some View {
         VStack(spacing: 0){
             Text("Создайте аккаунт")
@@ -19,20 +18,20 @@ struct SignUpView: View {
                 .padding(.top, 97)
             Spacer(minLength: 50)
             VStack(spacing: 28){
-                CustomTextField(text: $email, isSecure: false, title: "Почта")
-                CustomTextField(text: $password, isSecure: true, title: "Пароль")
-                CustomTextField(text: $rePassword, isSecure: true, title: "Повторите пароль")
+                CustomTextField(text: $loginVM.email, isSecure: false, title: "Почта")
+                CustomTextField(text: $loginVM.password, isSecure: true, title: "Пароль")
+                CustomTextField(text: $loginVM.rePass, isSecure: true, title: "Повторите пароль")
             }
            
             Spacer()
             Button {
-                
+                loginVM.checkSignUp()
             } label: {
                 Text("Зарегистрироваться")
                     .foregroundColor(Color.white)
                     .font(.custom(customFont, size: 25).weight(.bold))
                     .frame(maxWidth: .infinity)
-                    .frame(height: 66)
+                    .frame(height: 55)
                     .background(Color("green"))
                     .cornerRadius(30)
                     .padding(.horizontal, 30)
@@ -52,6 +51,13 @@ struct SignUpView: View {
                             .padding(.bottom, 32)
                          , alignment: .bottom)
         }
+        .overlay(
+            ZStack{
+            if loginVM.isLoad == true {
+                ProgressView()
+            }
+            }
+        )
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .overlay(

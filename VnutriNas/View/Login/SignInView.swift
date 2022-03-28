@@ -10,7 +10,8 @@ import SwiftUI
 struct SignInView: View {
     @State var email: String = ""
     @State var password: String = ""
-    @AppStorage("isAuth") var isAuth: Bool = false
+    @StateObject var loginVM = LoginViewModel()
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0){
@@ -19,33 +20,34 @@ struct SignInView: View {
                     .padding(.top, 97)
                 Spacer(minLength: 50)
                 VStack(spacing: 28){
-                    CustomTextField(text: $email, isSecure: false, title: "Почта")
-                    CustomTextField(text: $password, isSecure: true, title: "Пароль")
+                    CustomTextField(text: $loginVM.email, isSecure: false, title: "Почта")
+                    CustomTextField(text: $loginVM.password, isSecure: true, title: "Пароль")
                 }
-                Button {
-                    
-                } label: {
-                    Text("Забыли пароль?")
-                        .foregroundColor(Color(#colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1)))
-                        .font(.custom(customFont, size: 15).weight(.medium))
-                }
-                .padding(.top, 19)
+                
                 Spacer()
-                Button {
-                    withAnimation {
-                        isAuth = true
+                VStack(spacing: 20) {
+                    Button {
+                        loginVM.checkAuth()
+                    } label: {
+                        Text("Войти")
+                            .foregroundColor(Color.white)
+                            .font(.custom(customFont, size: 25).weight(.bold))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 55)
+                            .background(Color("green"))
+                            .cornerRadius(30)
+                            .padding(.horizontal, 30)
                     }
-                } label: {
-                    Text("Войти")
-                        .foregroundColor(Color.white)
-                        .font(.custom(customFont, size: 25).weight(.bold))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 66)
-                        .background(Color("green"))
-                        .cornerRadius(30)
-                        .padding(.horizontal, 30)
+                    Button {
+                        
+                    } label: {
+                        Text("Забыли пароль?")
+                            .foregroundColor(Color(#colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1)))
+                            .font(.custom(customFont, size: 15).weight(.medium))
+                    }
+                    
                 }
-                .padding(.bottom, 23)
+                .padding(.bottom, 9)
                 Image("Group 28")
                     .resizable()
                     .scaledToFit()
@@ -53,6 +55,7 @@ struct SignInView: View {
                     .overlay(NavigationLink(destination: {
                         
                         SignUpView()
+                            .environmentObject(loginVM)
                     }, label: {
                         Text("Регистрация")
                             .foregroundColor(Color("green"))
@@ -61,10 +64,22 @@ struct SignInView: View {
                                 .padding(.bottom, 32)
                              , alignment: .bottom)
             }
+            .overlay(
+                ZStack{
+                if loginVM.isLoad == true {
+                    ProgressView()
+                }
+                }
+            )
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
+            .alert(isPresented: $loginVM.showError) {
+                Alert(title: Text("Ошибка"), message: Text(loginVM.errorMessage), dismissButton: Alert.Button.default(Text("ОК")))
+            }
         }
         
     }
 }
+
+
 

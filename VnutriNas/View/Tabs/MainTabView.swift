@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @State var selection: Int = 1
+    @StateObject var itemVM = ItemViewModel()
     init(){
         UITabBar.appearance().isHidden = true
     }
@@ -16,8 +17,16 @@ struct MainTabView: View {
         VStack(spacing: 0){
             TabView(selection: $selection){
                 MainMenuView()
+                    .environmentObject(itemVM)
                     .tag(1)
+                FavoritesView()
+                    .environmentObject(itemVM)
+                    .tag(2)
+                CartView()
+                    .environmentObject(itemVM)
+                    .tag(3)
                 SettingsView()
+                    .environmentObject(itemVM)
                     .tag(4)
             }
             CustomTabView(selection: $selection)
@@ -40,7 +49,7 @@ struct CustomTabView: View{
             Button {
                 selection = 2
             } label: {
-                Image("bell")
+                Image("fav")
                     .renderingMode(.template)
                     .foregroundColor(selection == 2 ? Color.black : Color("tabs"))
                     .frame(maxWidth: .infinity)

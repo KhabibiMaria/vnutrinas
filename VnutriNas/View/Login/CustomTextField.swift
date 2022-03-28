@@ -19,8 +19,10 @@ struct CustomTextField: View {
             }
             if isSecure{
                 SecureField("", text: $text)
+                    .textInputAutocapitalization(.never)
             } else {
                 TextField("", text: $text)
+                    .textInputAutocapitalization(.never)
             }
         }
         .padding(.leading, 40)
@@ -28,7 +30,7 @@ struct CustomTextField: View {
         .foregroundColor(Color.black.opacity(0.5))
         .font(.custom(customFont, size: 20).weight(.medium))
         .frame(maxWidth: .infinity)
-        .frame(height: 66)
+        .frame(height: 55)
         .background(Color("tf"))
         .cornerRadius(30)
         .padding(.horizontal, 30)

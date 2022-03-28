@@ -15,17 +15,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="vIL-vu-sld">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="vIL-vu-sld">
+                                <rect key="frame" x="-10" y="0.0" width="453" height="896"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="vIL-vu-sld" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="-10" id="5bD-2l-yI0"/>
+                            <constraint firstAttribute="bottom" secondItem="vIL-vu-sld" secondAttribute="bottom" id="6FL-jE-F40"/>
                             <constraint firstItem="vIL-vu-sld" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="Bhc-QQ-Xnc"/>
                             <constraint firstItem="vIL-vu-sld" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Eat-np-QOO"/>
                             <constraint firstAttribute="bottom" secondItem="vIL-vu-sld" secondAttribute="bottom" id="RNs-i3-0Of"/>
                             <constraint firstItem="vIL-vu-sld" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="Spm-q6-CyK"/>
+                            <constraint firstItem="vIL-vu-sld" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="VYl-MT-gF4"/>
+                            <constraint firstAttribute="trailing" secondItem="vIL-vu-sld" secondAttribute="trailing" constant="-28" id="fm9-O6-W4v"/>
                         </constraints>
                     </view>
                 </viewController>
